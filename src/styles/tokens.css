@@ -1,0 +1,60 @@
+/* Design Tokens for Research Fieldnote Visual System */
+:root {
+  /* Color System */
+  --color-paper: #F4F1E9;
+  --color-ink: #1D211F;
+  --color-secondary: #5C625D;
+  --color-cobalt: #3159C9;
+  --color-vermilion: #D9503D;
+  --color-rule: #D8D4CA;
+  --color-white: #FFFFFF;
+
+  /* Typography Scale */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "DM Mono", "SF Mono", Consolas, monospace;
+
+  --text-hero: clamp(2.8rem, 7.4vw, 7.5rem);
+  --line-height-hero: 0.98;
+  --text-section: clamp(2rem, 4vw, 4.5rem);
+  --line-height-section: 1.08;
+  --text-project: clamp(1.5rem, 2.5vw, 2.4rem);
+  --line-height-project: 1.15;
+  --text-lead: clamp(1.2rem, 1.8vw, 1.4rem);
+  --line-height-lead: 1.5;
+  --text-body: clamp(1rem, 1.05vw, 1.1rem);
+  --line-height-body: 1.65;
+  --text-metadata: clamp(0.75rem, 0.85vw, 0.875rem);
+  --line-height-metadata: 1.4;
+
+  /* Spacing Scale (4px base) */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-88: 88px;
+  --space-112: 112px;
+  --space-144: 144px;
+
+  /* Layout */
+  --max-width-content: 1440px;
+  --margin-desktop: clamp(24px, 5vw, 80px);
+  --margin-mobile: 22px;
+  --header-height: 72px;
+
+  /* Motion & Transitions */
+  --motion-duration-short: 150ms;
+  --motion-duration-default: 300ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Borders & Radius */
+  --border-rule: 1px solid var(--color-rule);
+  --border-ink: 1px solid var(--color-ink);
+  --border-cobalt: 1px solid var(--color-cobalt);
+  --radius-subtle: 2px;
+  --radius-sm: 4px;
+}
