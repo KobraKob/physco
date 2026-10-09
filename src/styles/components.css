@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(244, 241, 233, 0.94);
+  background-color: rgba(248, 243, 232, 0.94);
   backdrop-filter: blur(8px);
   border-bottom: var(--border-rule);
   z-index: 100;
@@ -34,13 +34,14 @@
 }
 
 .wordmark:hover {
-  color: var(--color-cobalt);
+  color: var(--color-berry);
 }
 
 .wordmark-sub {
   font-size: 0.75rem;
   color: var(--color-secondary);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
   text-transform: uppercase;
 }
 
@@ -66,9 +67,9 @@
 
 /* Active navigation state: combines color AND border/underline indicator */
 .nav-link.active {
-  color: var(--color-cobalt);
+  color: var(--color-berry);
   font-weight: 700;
-  border-bottom: 2px solid var(--color-cobalt);
+  border-bottom: 2px solid var(--color-berry);
 }
 
 .nav-cv-button {
@@ -76,7 +77,7 @@
   font-weight: 500;
   color: var(--color-ink);
   background: transparent;
-  border: 1px solid var(--color-ink);
+  border: 1px solid var(--color-control-border);
   padding: 6px 14px;
   border-radius: var(--radius-subtle);
   text-decoration: none;
@@ -89,6 +90,7 @@
 .nav-cv-button:hover {
   background: var(--color-ink);
   color: var(--color-white);
+  border-color: var(--color-ink);
 }
 
 /* Mobile Nav Toggle */
@@ -101,7 +103,7 @@
   justify-content: center;
   color: var(--color-ink);
   background: transparent;
-  border: 1px solid var(--color-rule);
+  border: 1px solid var(--color-control-border);
   border-radius: var(--radius-subtle);
 }
 
@@ -136,9 +138,9 @@
 }
 
 .mobile-nav-link.active {
-  color: var(--color-cobalt);
+  color: var(--color-berry);
   font-weight: 700;
-  border-left: 3px solid var(--color-cobalt);
+  border-left: 3px solid var(--color-berry);
   padding-left: var(--space-12);
 }
 
@@ -182,13 +184,14 @@
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  font-family: var(--font-mono);
 }
 
 .hero-eyebrow-badge {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: var(--color-vermilion);
+  background-color: var(--color-guava);
   border-radius: 50%;
 }
 
@@ -233,8 +236,8 @@
 }
 
 .btn-primary:hover {
-  background-color: var(--color-cobalt);
-  border-color: var(--color-cobalt);
+  background-color: var(--color-berry);
+  border-color: var(--color-berry);
   color: var(--color-white);
 }
 
@@ -249,13 +252,13 @@
   font-weight: 500;
   text-decoration: none;
   border-radius: var(--radius-subtle);
-  border: 1px solid var(--color-ink);
+  border: 1px solid var(--color-control-border);
   transition: background-color var(--motion-duration-short) ease, color var(--motion-duration-short) ease;
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-ink);
-  color: var(--color-white);
+  background-color: var(--color-lavender);
+  color: var(--color-ink);
 }
 
 .hero-visual-col {
@@ -282,14 +285,14 @@
   gap: var(--space-8);
   font-size: var(--text-metadata);
   color: var(--color-secondary);
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
 }
 
 .section-label-index {
-  color: var(--color-vermilion);
+  color: var(--color-berry);
   font-family: var(--font-mono);
   font-weight: 700;
 }
@@ -322,11 +325,14 @@
 }
 
 .working-principles-box {
-  border-left: 2px solid var(--color-ink);
+  border-left: 3px solid var(--color-berry);
   padding-left: var(--space-24);
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
+  background: rgba(230, 220, 239, 0.35); /* Subtle lavender tint */
+  padding: var(--space-24);
+  border-radius: var(--radius-subtle);
 }
 
 .principles-heading {
@@ -335,6 +341,7 @@
   letter-spacing: 0.08em;
   color: var(--color-secondary);
   font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 .principles-list {
@@ -354,7 +361,7 @@
 }
 
 .principle-bullet {
-  color: var(--color-vermilion);
+  color: var(--color-guava);
   font-size: 0.8rem;
 }
 
@@ -385,8 +392,8 @@
 .rq-index {
   font-family: var(--font-mono);
   font-size: 1.1rem;
-  color: var(--color-vermilion);
-  font-weight: 500;
+  color: var(--color-berry);
+  font-weight: 600;
 }
 
 .rq-content {
@@ -445,8 +452,8 @@
 .project-context-tag {
   font-family: var(--font-mono);
   font-size: var(--text-metadata);
-  color: var(--color-cobalt);
-  font-weight: 500;
+  color: var(--color-berry);
+  font-weight: 600;
   letter-spacing: 0.04em;
 }
 
@@ -470,16 +477,16 @@
   color: var(--color-secondary);
 }
 
-/* Project Structured Sections Sequence:
-   Question → Context → Method → Contribution → Findings → Limitations → References / Artefact */
+/* Project Case Study Container: Curious Margin Lavender Surface */
 .project-case-study {
   display: flex;
   flex-direction: column;
   gap: var(--space-24);
-  background: #ECE8DD;
-  padding: clamp(16px, 3vw, 32px);
-  border-left: 3px solid var(--color-cobalt);
+  background-color: var(--color-lavender);
+  padding: clamp(20px, 3.5vw, 36px);
+  border-left: 3px solid var(--color-berry);
   margin-top: var(--space-8);
+  border-radius: var(--radius-subtle);
 }
 
 .case-study-field {
@@ -492,9 +499,9 @@
   font-family: var(--font-mono);
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: var(--color-berry);
   letter-spacing: 0.06em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .field-value {
@@ -517,6 +524,7 @@
   border: 1px solid var(--color-rule);
   padding: 4px 10px;
   color: var(--color-ink);
+  border-radius: var(--radius-subtle);
 }
 
 .project-attributions {
@@ -546,9 +554,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
-  color: var(--color-cobalt);
+  color: var(--color-berry);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -557,7 +565,14 @@
   color: var(--color-ink);
 }
 
-/* Methods and Skills */
+/* Methods and Skills: Rendered on Calm Sea-Glass Surface */
+.methods-section-seaglass {
+  background-color: var(--color-seaglass);
+  color: var(--color-ink);
+  border-top: var(--border-rule);
+  border-bottom: var(--border-rule);
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -590,7 +605,7 @@
   flex-direction: column;
   gap: 4px;
   padding-bottom: var(--space-12);
-  border-bottom: var(--border-rule);
+  border-bottom: 1px solid rgba(44, 33, 51, 0.18);
 }
 
 .skill-name {
@@ -603,7 +618,8 @@
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-cobalt);
+  color: var(--color-moss);
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 
@@ -641,6 +657,7 @@
   letter-spacing: 0.08em;
   border-bottom: 2px solid var(--color-ink);
   padding-bottom: var(--space-8);
+  font-weight: 600;
 }
 
 .timeline-items-list {
@@ -671,16 +688,18 @@
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-weight: 600;
+  font-family: var(--font-mono);
 }
 
 .status-in-progress {
-  background: #E0E7FF;
-  color: #1E40AF;
+  background: var(--color-lavender);
+  color: var(--color-berry);
 }
 
 .status-completed {
-  background: #E6F4EA;
-  color: #137333;
+  background: rgba(50, 103, 94, 0.15);
+  color: var(--color-moss);
 }
 
 .timeline-item-title {
@@ -697,11 +716,12 @@
 
 .timeline-thesis {
   font-size: 0.9rem;
-  background: #ECE8DD;
+  background: var(--color-lavender);
   padding: var(--space-12);
-  border-left: 2px solid var(--color-ink);
+  border-left: 2px solid var(--color-berry);
   margin-top: var(--space-8);
   line-height: 1.5;
+  border-radius: var(--radius-subtle);
 }
 
 /* Writing / Publications */
@@ -732,18 +752,20 @@
   line-height: 1.5;
 }
 
-/* Ethical Practice */
+/* Ethical Practice: Deep Aubergine Editorial Surface */
 .ethics-card {
-  background: #ECE8DD;
-  border: 1px solid var(--color-rule);
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  border: 1px solid var(--color-ink);
   padding: clamp(24px, 4vw, 48px);
-  border-left: 4px solid var(--color-vermilion);
+  border-left: 4px solid var(--color-citron);
+  border-radius: var(--radius-subtle);
 }
 
 .ethics-text {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: var(--color-ink);
+  color: var(--color-white);
 }
 
 /* Contact Section & Footer */
@@ -770,20 +792,25 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
-  background: #ECE8DD;
+  background: var(--color-lavender);
   padding: clamp(20px, 3vw, 32px);
-  border: var(--border-rule);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-subtle);
 }
 
 .email-contact-link {
   font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--color-cobalt);
+  font-weight: 600;
+  color: var(--color-berry);
   display: inline-flex;
   align-items: center;
   gap: var(--space-8);
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.email-contact-link:hover {
+  color: var(--color-ink);
 }
 
 .external-links-list {
@@ -828,6 +855,6 @@
 }
 
 .footer-link:hover {
-  color: var(--color-ink);
+  color: var(--color-berry);
   text-decoration: underline;
 }

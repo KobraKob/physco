@@ -29,9 +29,15 @@ body {
   position: relative;
 }
 
+/* Witty Citron Text Selection */
+::selection {
+  background-color: var(--color-citron);
+  color: var(--color-ink);
+}
+
 /* Accessible Focus States (WCAG 2.2 AA) */
 :focus-visible {
-  outline: 2px solid var(--color-cobalt);
+  outline: 2px solid var(--color-berry);
   outline-offset: 3px;
 }
 
@@ -65,10 +71,10 @@ p {
 }
 
 a {
-  color: var(--color-cobalt);
+  color: var(--color-berry);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 1.5px;
   transition: opacity var(--motion-duration-short) ease, color var(--motion-duration-short) ease;
 }
 
@@ -106,7 +112,7 @@ img, svg {
   }
 }
 
-/* Grid System */
+/* Grid System (12 / 8 / 4 column logic) */
 .grid-12 {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -128,7 +134,7 @@ img, svg {
   }
 }
 
-/* Section Spacing */
+/* Section Spacing & Transitions */
 .section-wrapper {
   padding-top: clamp(64px, 8vw, 112px);
   padding-bottom: clamp(64px, 8vw, 112px);
@@ -136,13 +142,50 @@ img, svg {
   position: relative;
 }
 
+/* Surface Variations (Curious Margin rhythm: ~10-18% tinted, ~8-15% dark aubergine) */
+.surface-seaglass {
+  background-color: var(--color-seaglass);
+  color: var(--color-ink);
+  border-top: var(--border-rule);
+  border-bottom: var(--border-rule);
+}
+
+.surface-lavender {
+  background-color: var(--color-lavender);
+  color: var(--color-ink);
+  border-top: var(--border-rule);
+  border-bottom: var(--border-rule);
+}
+
+.surface-dark-aubergine {
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  border-top: 1px solid rgba(255, 252, 246, 0.15);
+  border-bottom: 1px solid rgba(255, 252, 246, 0.15);
+}
+
+.surface-dark-aubergine h1,
+.surface-dark-aubergine h2,
+.surface-dark-aubergine h3,
+.surface-dark-aubergine p {
+  color: var(--color-white);
+}
+
+.surface-dark-aubergine a {
+  color: var(--color-citron);
+}
+
+.surface-dark-aubergine :focus-visible {
+  outline: 2px solid var(--color-citron);
+}
+
 /* Visual Pauses and Marginal Annotations */
 .marginal-note {
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: var(--text-metadata);
   color: var(--color-secondary);
   line-height: var(--line-height-metadata);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
@@ -150,9 +193,18 @@ img, svg {
 }
 
 .marginal-index {
-  color: var(--color-vermilion);
+  color: var(--color-berry);
   font-weight: 500;
   font-family: var(--font-mono);
+}
+
+/* Citron Highlighter Accent */
+.citron-highlight {
+  background: var(--color-citron);
+  color: var(--color-ink);
+  padding: 0 4px;
+  border-radius: var(--radius-subtle);
+  display: inline;
 }
 
 /* Skip to Content Link */
@@ -172,6 +224,6 @@ img, svg {
 
 .skip-link:focus {
   top: var(--space-16);
-  outline: 2px solid var(--color-vermilion);
+  outline: 2px solid var(--color-citron);
   outline-offset: 2px;
 }

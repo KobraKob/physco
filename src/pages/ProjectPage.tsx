@@ -118,7 +118,7 @@ export const ProjectPage: React.FC = () => {
         </div>
 
         {/* Case Study Details Sequence */}
-        <div className="project-case-study" style={{ background: '#ECE8DD', borderRadius: 'var(--radius-subtle)' }}>
+        <div className="project-case-study">
           {project.question && (
             <div className="case-study-field">
               <span className="field-label">1. Primary Research Question</span>

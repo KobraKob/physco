@@ -22,6 +22,20 @@ export const EthicalPracticeSection: React.FC<EthicalPracticeSectionProps> = ({ 
         />
 
         <div className="ethics-card">
+          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.75rem',
+                color: 'var(--color-citron)',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                fontWeight: 600,
+              }}
+            >
+              [ETHICAL SAFEGUARD &amp; INTEGRITY]
+            </span>
+          </div>
           <p className="ethics-text">{profile.ethicalPractice}</p>
         </div>
       </div>

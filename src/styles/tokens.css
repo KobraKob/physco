@@ -1,18 +1,23 @@
-/* Design Tokens for Research Fieldnote Visual System */
+/* Design Tokens for "Curious Margin" Editorial Visual System */
 :root {
-  /* Color System */
-  --color-paper: #F4F1E9;
-  --color-ink: #1D211F;
-  --color-secondary: #5C625D;
-  --color-cobalt: #3159C9;
-  --color-vermilion: #D9503D;
-  --color-rule: #D8D4CA;
-  --color-white: #FFFFFF;
+  /* Core Curious Margin Palette */
+  --color-paper: #F8F3E8;            /* Main canvas: warm porcelain */
+  --color-ink: #2C2133;              /* Primary text & deep aubergine surfaces */
+  --color-secondary: #5F5362;        /* Secondary copy & metadata */
+  --color-berry: #6B315D;            /* Primary link, active nav, editorial numbering */
+  --color-moss: #32675E;             /* Secondary accent: research methods & category tags */
+  --color-citron: #DDEB72;           /* Bright highlighter: underline blocks, chart accents */
+  --color-guava: #E9785B;            /* Warm human accent: vector nodes, illustrations */
+  --color-seaglass: #A8D4C5;         /* Calm, low-noise surface for research/methods */
+  --color-lavender: #E6DCEF;         /* Alternate editorial surface for projects/archive */
+  --color-rule: #D7CFC3;             /* Hairline separators only */
+  --color-control-border: #81717F;   /* Form & interactive control outlines */
+  --color-white: #FFFCF6;            /* Warm near-white for reverse text on dark surfaces */
 
   /* Typography Scale */
-  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "DM Mono", "SF Mono", Consolas, monospace;
+  --font-mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
 
   --text-hero: clamp(2.8rem, 7.4vw, 7.5rem);
   --line-height-hero: 0.98;
@@ -21,7 +26,7 @@
   --text-project: clamp(1.5rem, 2.5vw, 2.4rem);
   --line-height-project: 1.15;
   --text-lead: clamp(1.2rem, 1.8vw, 1.4rem);
-  --line-height-lead: 1.5;
+  --line-height-lead: 1.55;
   --text-body: clamp(1rem, 1.05vw, 1.1rem);
   --line-height-body: 1.65;
   --text-metadata: clamp(0.75rem, 0.85vw, 0.875rem);
@@ -40,13 +45,13 @@
   --space-112: 112px;
   --space-144: 144px;
 
-  /* Layout */
+  /* Layout Constraints */
   --max-width-content: 1440px;
   --margin-desktop: clamp(24px, 5vw, 80px);
   --margin-mobile: 22px;
   --header-height: 72px;
 
-  /* Motion & Transitions */
+  /* Motion & Transitions (150ms - 350ms) */
   --motion-duration-short: 150ms;
   --motion-duration-default: 300ms;
   --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -54,7 +59,8 @@
   /* Borders & Radius */
   --border-rule: 1px solid var(--color-rule);
   --border-ink: 1px solid var(--color-ink);
-  --border-cobalt: 1px solid var(--color-cobalt);
+  --border-control: 1px solid var(--color-control-border);
+  --border-berry: 1px solid var(--color-berry);
   --radius-subtle: 2px;
   --radius-sm: 4px;
 }

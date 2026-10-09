@@ -16,7 +16,7 @@ export const MethodsSkillsSection: React.FC<MethodsSkillsSectionProps> = ({ prof
   const categories = Array.from(new Set(profile.skills.map((s) => s.category)));
 
   return (
-    <section id="skills" className="section-wrapper" aria-labelledby="skills-heading">
+    <section id="skills" className="section-wrapper surface-seaglass" aria-labelledby="skills-heading">
       <div className="site-container">
         <SectionLabel
           index="04"
