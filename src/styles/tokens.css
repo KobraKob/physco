@@ -51,10 +51,16 @@
   --margin-mobile: 22px;
   --header-height: 72px;
 
-  /* Motion & Transitions (150ms - 350ms) */
-  --motion-duration-short: 150ms;
-  --motion-duration-default: 300ms;
-  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Motion Hierarchy and Timing Tokens (Section 6 Addendum) */
+  --motion-fast: 180ms;
+  --motion-ui: 260ms;
+  --motion-reveal: 440ms;
+  --motion-draw: 620ms;
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --motion-duration-short: 180ms;
+  --motion-duration-default: 260ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Borders & Radius */
   --border-rule: 1px solid var(--color-rule);

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Profile } from '../types/profile';
-import { MarginMap } from './MarginMap';
+import { AttentionField } from './AttentionField';
 
 export interface HeroSectionProps {
   profile: Profile;
@@ -37,7 +37,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
     <section className="hero-section" aria-label="Introduction">
       <div className="site-container">
         <div className="hero-grid">
-          {/* Left Text Column (Asymmetric split: narrower than MarginMap) */}
+          {/* Left Text Column (Asymmetric split: narrower than AttentionField) */}
           <div className="hero-text-col">
             {eyebrowText && (
               <div className="hero-eyebrow">
@@ -91,9 +91,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
             </div>
           </div>
 
-          {/* Right Column: Custom SVG Margin-Map Motif (Marked aria-hidden="true") */}
-          <div className="hero-visual-col" aria-hidden="true">
-            <MarginMap variant="hero" />
+          {/* Right Column: Signature Interaction A & D: Attention Field with Shift Focus */}
+          <div className="hero-visual-col">
+            <AttentionField />
           </div>
         </div>
       </div>

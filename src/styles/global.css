@@ -41,7 +41,7 @@ body {
   outline-offset: 3px;
 }
 
-/* Prefer Reduced Motion */
+/* Static-First & Reduced Motion Baseline (Section 7 Addendum) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -51,6 +51,32 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .idle-drift,
+  .evidence-path,
+  .annotation-bracket-line {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* Site-level motion disable override (if user activates Still Mode) */
+html.motion-disabled *,
+html.motion-disabled *::before,
+html.motion-disabled *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+html.motion-disabled .idle-drift,
+html.motion-disabled .evidence-path,
+html.motion-disabled .annotation-bracket-line {
+  animation: none !important;
+  stroke-dashoffset: 0 !important;
+  transform: none !important;
 }
 
 /* Typography Defaults */
@@ -75,7 +101,7 @@ a {
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1.5px;
-  transition: opacity var(--motion-duration-short) ease, color var(--motion-duration-short) ease;
+  transition: opacity var(--motion-fast) ease, color var(--motion-fast) ease;
 }
 
 a:hover {
@@ -142,7 +168,7 @@ img, svg {
   position: relative;
 }
 
-/* Surface Variations (Curious Margin rhythm: ~10-18% tinted, ~8-15% dark aubergine) */
+/* Surface Variations */
 .surface-seaglass {
   background-color: var(--color-seaglass);
   color: var(--color-ink);
@@ -196,6 +222,7 @@ img, svg {
   color: var(--color-berry);
   font-weight: 500;
   font-family: var(--font-mono);
+  transition: transform var(--motion-reveal) var(--ease-editorial), opacity var(--motion-reveal) ease;
 }
 
 /* Citron Highlighter Accent */
@@ -219,11 +246,32 @@ img, svg {
   font-weight: 500;
   text-decoration: none;
   border-radius: var(--radius-subtle);
-  transition: top var(--motion-duration-short) ease;
+  transition: top var(--motion-fast) ease;
 }
 
 .skip-link:focus {
   top: var(--space-16);
   outline: 2px solid var(--color-citron);
   outline-offset: 2px;
+}
+
+/* Idle Motion Keyframes for Attention Field Nodes (14s - 22s subtle 2-4px drift) */
+@keyframes idle-drift-a {
+  0% { transform: translate(0, 0); }
+  35% { transform: translate(3px, -2px); }
+  70% { transform: translate(-2px, 3px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes idle-drift-b {
+  0% { transform: translate(0, 0); }
+  40% { transform: translate(-3px, 2px); }
+  75% { transform: translate(2px, -3px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes idle-drift-c {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(2px, 2px); }
+  100% { transform: translate(0, 0); }
 }

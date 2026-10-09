@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Project } from '../types/project';
+import { EvidenceTrail, type EvidenceTrailStage } from './EvidenceTrail';
 
 export interface ProjectRowProps {
   project: Project;
@@ -19,12 +20,22 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
       project.artefact.href.startsWith('https://') ||
       project.artefact.href.startsWith('/'));
 
+  // Derive genuine research sequence stages that exist in this project
+  const stages: EvidenceTrailStage[] = [
+    project.question ? { key: 'question', label: 'Question' } : null,
+    project.context ? { key: 'context', label: 'Context' } : null,
+    project.methods && project.methods.length > 0 ? { key: 'method', label: 'Method' } : null,
+    project.contribution ? { key: 'contribution', label: 'Contribution' } : null,
+    project.findingsOrLearning ? { key: 'findings', label: 'Findings' } : null,
+    project.limitations ? { key: 'limitations', label: 'Limitations' } : null,
+  ].filter(Boolean) as EvidenceTrailStage[];
+
   return (
     <article className="project-card" aria-labelledby={`project-${project.slug}-title`}>
       {/* Top Metadata */}
       {(project.context || project.year) && (
         <div className="project-meta-top">
-          {project.context && <span className="project-context-tag">{project.context}</span>}
+          {project.context && <span className="project-context-tag">[{project.context}]</span>}
           {project.year && <span className="project-year">{project.year}</span>}
         </div>
       )}
@@ -39,10 +50,12 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
       {/* Summary */}
       {project.summary && <p className="project-summary">{project.summary}</p>}
 
-      {/* Case Study Structured Sequence (Requirement 9.3)
-          Question → Context → Method → Contribution → Findings / Learning → Limitations → References / Artefact */}
+      {/* Case Study Structured Sequence with Signature Interaction B (Evidence Trail) */}
       {showFullCaseStudy && (
         <div className="project-case-study">
+          {/* Animated Evidence Trail Spine */}
+          {stages.length > 0 && <EvidenceTrail stages={stages} />}
+
           {/* 1. Question */}
           {project.question && (
             <div className="case-study-field">
@@ -81,7 +94,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
             </div>
           )}
 
-          {/* 5. Findings / Learning (Requirement 9.5) */}
+          {/* 5. Findings / Learning */}
           {project.findingsOrLearning && (
             <div className="case-study-field">
               <span className="field-label">Empirical Findings &amp; Observations</span>
@@ -97,7 +110,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
             </div>
           )}
 
-          {/* 7. Attributions: Collaborators & Supervisor (Requirement 9.9) */}
+          {/* 7. Attributions */}
           {(project.collaborators || project.supervisor) && (
             <div className="project-attributions">
               {project.collaborators && project.collaborators.length > 0 && (
@@ -135,11 +148,11 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
         </div>
       )}
 
-      {/* Footer Actions: Dedicated Detail Link and Artefact Link */}
+      {/* Footer Actions: Dedicated Detail Link and Artefact Link with Stationary Text & Mobile-Safe Hover/Focus */}
       <div className="project-footer-actions">
-        <Link to={`/project/${project.slug}`} className="artefact-link">
+        <Link to={`/project/${project.slug}`} className="artefact-link project-dossier-link">
           <span>Read complete project dossier</span>
-          <span aria-hidden="true">→</span>
+          <span className="link-arrow-mark" aria-hidden="true">→</span>
         </Link>
 
         {isValidArtefact && project.artefact && (
@@ -150,7 +163,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
             className="artefact-link"
           >
             <span>{project.artefact.label}</span>
-            <span aria-hidden="true">↗</span>
+            <span className="link-arrow-mark" aria-hidden="true">↗</span>
           </a>
         )}
       </div>

@@ -6,6 +6,7 @@ import { SkipLink } from '../components/SkipLink';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { MarginMap } from '../components/MarginMap';
+import { EvidenceTrail, type EvidenceTrailStage } from '../components/EvidenceTrail';
 
 export const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -51,6 +52,15 @@ export const ProjectPage: React.FC = () => {
     (project.artefact.href.startsWith('http://') ||
       project.artefact.href.startsWith('https://') ||
       project.artefact.href.startsWith('/'));
+
+  const stages: EvidenceTrailStage[] = [
+    project.question ? { key: 'question', label: 'Question' } : null,
+    project.context ? { key: 'context', label: 'Context' } : null,
+    project.methods && project.methods.length > 0 ? { key: 'method', label: 'Method' } : null,
+    project.contribution ? { key: 'contribution', label: 'Contribution' } : null,
+    project.findingsOrLearning ? { key: 'findings', label: 'Findings' } : null,
+    project.limitations ? { key: 'limitations', label: 'Limitations' } : null,
+  ].filter(Boolean) as EvidenceTrailStage[];
 
   return (
     <>
@@ -117,8 +127,9 @@ export const ProjectPage: React.FC = () => {
           <MarginMap variant="accent" />
         </div>
 
-        {/* Case Study Details Sequence */}
+        {/* Case Study Details Sequence with Signature Interaction B */}
         <div className="project-case-study">
+          {stages.length > 0 && <EvidenceTrail stages={stages} />}
           {project.question && (
             <div className="case-study-field">
               <span className="field-label">1. Primary Research Question</span>

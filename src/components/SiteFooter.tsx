@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Profile } from '../types/profile';
 import type { Project } from '../types/project';
 
@@ -9,6 +9,27 @@ export interface SiteFooterProps {
 
 export const SiteFooter: React.FC<SiteFooterProps> = ({ profile, projects }) => {
   const currentYear = new Date().getFullYear();
+  const [isMotionDisabled, setIsMotionDisabled] = useState(false);
+  const [isOsReducedMotion, setIsOsReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setIsOsReducedMotion(mq.matches);
+      const listener = (e: MediaQueryListEvent) => setIsOsReducedMotion(e.matches);
+      mq.addEventListener('change', listener);
+      return () => mq.removeEventListener('change', listener);
+    }
+  }, []);
+
+  const toggleMotion = () => {
+    if (isOsReducedMotion) return; // Operating system setting always respected (Section 7 Addendum)
+    const next = !isMotionDisabled;
+    setIsMotionDisabled(next);
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('motion-disabled', next);
+    }
+  };
 
   // Consistent navigation links drawn from same set as header
   const navItems = [
@@ -64,21 +85,42 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ profile, projects }) => 
           </span>
         </div>
 
-        <nav className="footer-links" aria-label="Footer Navigation">
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className="footer-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handleScrollTo(item.id);
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        {/* Navigation and Accessible Still Mode Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-24)' }}>
+          <nav className="footer-links" aria-label="Footer Navigation">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="footer-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollTo(item.id);
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Signature Interaction 7.8: Accessible Motion On/Off Still Mode */}
+          <button
+            type="button"
+            className="motion-toggle-btn"
+            aria-pressed={isMotionDisabled || isOsReducedMotion}
+            onClick={toggleMotion}
+            title={
+              isOsReducedMotion
+                ? 'Operating system reduced motion is active'
+                : 'Toggle ambient motion preference'
+            }
+          >
+            <span>Motion: </span>
+            <span style={{ fontWeight: 600 }}>
+              {isOsReducedMotion ? 'System Reduced' : isMotionDisabled ? 'Off' : 'On'}
+            </span>
+          </button>
+        </div>
       </div>
     </footer>
   );
