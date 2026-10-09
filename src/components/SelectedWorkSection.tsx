@@ -28,9 +28,16 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({ projec
           title="Selected Academic Projects &amp; Empirical Studies"
         />
 
+        {/* Varied Surface Rhythm: Lead project is prominently featured in deep aubergine,
+            while secondary projects use lavender and sea-glass surfaces (Audit Section 3 Item 3) */}
         <div className="projects-container">
-          {publicProjects.map((project) => (
-            <ProjectRow key={project.slug} project={project} />
+          {publicProjects.map((project, idx) => (
+            <ProjectRow
+              key={project.slug}
+              project={project}
+              isFeatured={idx === 0}
+              surfaceVariant={idx % 2 === 1 ? 'lavender' : 'seaglass'}
+            />
           ))}
         </div>
       </div>

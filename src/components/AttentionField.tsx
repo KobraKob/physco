@@ -13,7 +13,7 @@ interface NodePoint {
   r: number;
   fill: string;
   stroke?: string;
-  driftClass?: string;
+  driftClass: 'idle-drift-a' | 'idle-drift-b' | 'idle-drift-c' | '';
   cluster: 'core' | 'connect' | 'context';
 }
 
@@ -29,23 +29,23 @@ const INITIAL_NODES: NodePoint[] = [
   { id: 8, x: 600, y: 120, r: 4, fill: 'var(--color-guava)', stroke: 'var(--color-ink)', driftClass: 'idle-drift-b', cluster: 'core' },
 
   // Connecting transition nodes (Connect mode emphasis)
-  { id: 9, x: 200, y: 310, r: 3, fill: 'var(--color-moss)', stroke: 'var(--color-paper)', cluster: 'connect' },
+  { id: 9, x: 200, y: 310, r: 3, fill: 'var(--color-moss)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'connect' },
   { id: 10, x: 280, y: 340, r: 3.5, fill: 'var(--color-ink)', stroke: 'var(--color-paper)', driftClass: 'idle-drift-c', cluster: 'connect' },
-  { id: 11, x: 360, y: 290, r: 3, fill: 'var(--color-berry)', stroke: 'var(--color-paper)', cluster: 'connect' },
+  { id: 11, x: 360, y: 290, r: 3, fill: 'var(--color-berry)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'connect' },
   { id: 12, x: 430, y: 260, r: 3.5, fill: 'var(--color-moss)', stroke: 'var(--color-paper)', driftClass: 'idle-drift-a', cluster: 'connect' },
-  { id: 13, x: 490, y: 210, r: 3, fill: 'var(--color-ink)', stroke: 'var(--color-paper)', cluster: 'connect' },
+  { id: 13, x: 490, y: 210, r: 3, fill: 'var(--color-ink)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'connect' },
   { id: 14, x: 560, y: 240, r: 3.5, fill: 'var(--color-berry)', stroke: 'var(--color-paper)', driftClass: 'idle-drift-b', cluster: 'connect' },
 
   // Context boundary & perimeter nodes (Context mode emphasis)
-  { id: 15, x: 70, y: 110, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 16, x: 140, y: 70, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 17, x: 220, y: 90, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 18, x: 330, y: 60, r: 3, fill: 'var(--color-moss)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 19, x: 440, y: 50, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 20, x: 580, y: 50, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 21, x: 120, y: 390, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 22, x: 270, y: 400, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
-  { id: 23, x: 490, y: 380, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', cluster: 'context' },
+  { id: 15, x: 70, y: 110, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 16, x: 140, y: 70, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 17, x: 220, y: 90, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 18, x: 330, y: 60, r: 3, fill: 'var(--color-moss)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 19, x: 440, y: 50, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 20, x: 580, y: 50, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 21, x: 120, y: 390, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 22, x: 270, y: 400, r: 3, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
+  { id: 23, x: 490, y: 380, r: 2.5, fill: 'var(--color-secondary)', stroke: 'var(--color-paper)', driftClass: '', cluster: 'context' },
 ];
 
 export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }) => {
@@ -57,6 +57,18 @@ export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }
   const rafId = useRef<number | null>(null);
   const isFinePointer = useRef<boolean>(false);
 
+  // Check if animation is permitted (Respects OS Reduced-Motion AND Site Still Mode - Audit Finding 2.D)
+  const isMotionPermitted = useCallback(() => {
+    if (typeof window === 'undefined') return false;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return false;
+    }
+    if (document.documentElement.classList.contains('motion-disabled')) {
+      return false;
+    }
+    return true;
+  }, []);
+
   // Detect fine-pointer capability
   useEffect(() => {
     if (typeof window !== 'undefined' && window.matchMedia) {
@@ -64,7 +76,38 @@ export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }
     }
   }, []);
 
-  // Pause idle work when outside viewport (Section 2 Addendum)
+  // Clear offsets if motion becomes disabled (Audit Finding 2.D)
+  useEffect(() => {
+    const handleMotionChange = () => {
+      if (!isMotionPermitted()) {
+        setOffsets({});
+      }
+    };
+
+    const mq = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    if (mq) {
+      mq.addEventListener('change', handleMotionChange);
+    }
+
+    const observer = typeof MutationObserver !== 'undefined' ? new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.attributeName === 'class') {
+          handleMotionChange();
+        }
+      });
+    }) : null;
+
+    if (observer) {
+      observer.observe(document.documentElement, { attributes: true });
+    }
+
+    return () => {
+      if (mq) mq.removeEventListener('change', handleMotionChange);
+      if (observer) observer.disconnect();
+    };
+  }, [isMotionPermitted]);
+
+  // Pause idle work when outside viewport (Section 2 & 4 Addendum)
   useEffect(() => {
     if (!svgRef.current || typeof IntersectionObserver === 'undefined') return;
 
@@ -94,35 +137,38 @@ export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }
     return () => document.removeEventListener('visibilitychange', handleVisibility);
   }, []);
 
-  // Pointer response strictly bounded to SVG bounds, max 6px shift, throttled via requestAnimationFrame
-  const handlePointerMove = useCallback((e: React.PointerEvent<SVGSVGElement>) => {
-    if (!isFinePointer.current || !svgRef.current) return;
+  // Pointer response strictly bounded to SVG bounds, max 5px shift, throttled via requestAnimationFrame
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<SVGSVGElement>) => {
+      if (!isFinePointer.current || !svgRef.current || !isMotionPermitted()) return;
 
-    const rect = svgRef.current.getBoundingClientRect();
-    const svgX = ((e.clientX - rect.left) / rect.width) * 680;
-    const svgY = ((e.clientY - rect.top) / rect.height) * 440;
+      const rect = svgRef.current.getBoundingClientRect();
+      const svgX = ((e.clientX - rect.left) / rect.width) * 680;
+      const svgY = ((e.clientY - rect.top) / rect.height) * 440;
 
-    if (rafId.current) cancelAnimationFrame(rafId.current);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
 
-    rafId.current = requestAnimationFrame(() => {
-      const newOffsets: Record<number, { dx: number; dy: number }> = {};
+      rafId.current = requestAnimationFrame(() => {
+        const newOffsets: Record<number, { dx: number; dy: number }> = {};
 
-      INITIAL_NODES.forEach((node) => {
-        const dist = Math.hypot(node.x - svgX, node.y - svgY);
-        // Only nearby cluster responds within a radius of 140px
-        if (dist < 140) {
-          const power = (1 - dist / 140) * 5.5; // Max 5.5px shift
-          const angle = Math.atan2(node.y - svgY, node.x - svgX);
-          newOffsets[node.id] = {
-            dx: Math.cos(angle) * power,
-            dy: Math.sin(angle) * power,
-          };
-        }
+        INITIAL_NODES.forEach((node) => {
+          const dist = Math.hypot(node.x - svgX, node.y - svgY);
+          // Only nearby cluster responds within a radius of 130px
+          if (dist < 130) {
+            const power = (1 - dist / 130) * 4.8; // Strict max 4.8px shift (Audit Section 4 Motion 2)
+            const angle = Math.atan2(node.y - svgY, node.x - svgX);
+            newOffsets[node.id] = {
+              dx: Math.cos(angle) * power,
+              dy: Math.sin(angle) * power,
+            };
+          }
+        });
+
+        setOffsets(newOffsets);
       });
-
-      setOffsets(newOffsets);
-    });
-  }, []);
+    },
+    [isMotionPermitted]
+  );
 
   const handlePointerLeave = useCallback(() => {
     if (rafId.current) cancelAnimationFrame(rafId.current);
@@ -224,11 +270,9 @@ export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }
           style={{ transition: 'opacity var(--motion-ui) ease' }}
         />
 
-        {/* Dynamic Nodes with local proximity displacement & non-sync idle drift */}
+        {/* Nested Node Architecture (Audit 2.C & 5: Outer group handles CSS keyframe drift, inner group handles pointer spring shift) */}
         {INITIAL_NODES.map((node) => {
           const offset = offsets[node.id] || { dx: 0, dy: 0 };
-          const cx = node.x + offset.dx;
-          const cy = node.y + offset.dy;
 
           // Compute opacity based on FocusMode
           let opacity = 1;
@@ -236,26 +280,29 @@ export const AttentionField: React.FC<AttentionFieldProps> = ({ className = '' }
           if (focusMode === 'Connect' && node.cluster === 'context') opacity = 0.35;
           if (focusMode === 'Context' && node.cluster === 'core') opacity = 0.75;
 
-          const driftAnimation = isInViewport && node.driftClass ? `var(--${node.driftClass})` : 'none';
-
           return (
             <g
               key={node.id}
-              className={`node-group ${node.driftClass || ''}`}
-              style={{
-                transition: 'opacity var(--motion-ui) ease, transform 120ms ease-out',
-                animation: driftAnimation,
-              }}
+              className={`node-idle-wrap ${node.driftClass}`}
+              style={{ transition: 'opacity var(--motion-ui) ease' }}
             >
-              <circle
-                cx={cx}
-                cy={cy}
-                r={node.r}
-                fill={node.fill}
-                stroke={node.stroke}
-                strokeWidth="1.25"
-                opacity={opacity}
-              />
+              <g
+                className="node-spring-wrap"
+                style={{
+                  transform: `translate(${offset.dx}px, ${offset.dy}px)`,
+                  transition: 'transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1)',
+                }}
+              >
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={node.r}
+                  fill={node.fill}
+                  stroke={node.stroke}
+                  strokeWidth="1.25"
+                  opacity={opacity}
+                />
+              </g>
             </g>
           );
         })}

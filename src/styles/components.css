@@ -921,20 +921,20 @@
   cursor: crosshair;
 }
 
-/* Idle Drift Node Classes */
-.idle-drift-a {
+/* Idle Drift Node Classes (Audit Finding 2.C fix) */
+.node-idle-wrap.idle-drift-a {
   animation: idle-drift-a 18s ease-in-out infinite;
 }
 
-.idle-drift-b {
+.node-idle-wrap.idle-drift-b {
   animation: idle-drift-b 22s ease-in-out infinite;
 }
 
-.idle-drift-c {
+.node-idle-wrap.idle-drift-c {
   animation: idle-drift-c 16s ease-in-out infinite;
 }
 
-.attention-field-svg.is-paused .node-group {
+.attention-field-svg.is-paused .node-idle-wrap {
   animation-play-state: paused;
 }
 
@@ -1105,6 +1105,392 @@
 }
 
 .motion-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-berry);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Visual Contrast & Motion Refactor: Poster Hero, Rail & Project Depth
+   ========================================================================== */
+
+/* Hero Poster Layout (Inspired by Reference Mockup & Audit 2.B) */
+.hero-editorial-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding-bottom: var(--space-20);
+  margin-bottom: var(--space-32);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-secondary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.hero-staggered-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-headline-line {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-headline-line {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: hero-line-reveal var(--motion-reveal) var(--ease-editorial) forwards;
+  }
+  .hero-headline-line:nth-child(1) { animation-delay: 40ms; }
+  .hero-headline-line:nth-child(2) { animation-delay: 95ms; }
+  .hero-headline-line:nth-child(3) { animation-delay: 150ms; }
+
+  @keyframes hero-line-reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.hero-prose-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.hero-secondary-note {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  max-width: 58ch;
+  border-left: 2px solid var(--color-berry);
+  padding-left: var(--space-16);
+}
+
+/* Hero Portrait Frame & Monograph Plate */
+.hero-portrait-frame {
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--space-24);
+}
+
+.portrait-offset-backdrop {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100%;
+  height: 100%;
+  background: var(--color-lavender);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-subtle);
+  z-index: 1;
+}
+
+.portrait-image-wrapper {
+  position: relative;
+  z-index: 2;
+  border: 1px solid var(--color-ink);
+  background: var(--color-paper);
+  border-radius: var(--radius-subtle);
+  overflow: hidden;
+}
+
+.hero-portrait-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.portrait-caption-label {
+  padding: 8px 14px;
+  background: var(--color-paper);
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fallback-monograph-plate .monograph-content-wrap {
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  min-height: 240px;
+  justify-content: space-between;
+}
+
+.monograph-header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.monograph-seal {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-berry);
+  background: var(--color-lavender);
+  padding: 2px 8px;
+  border: 1px solid var(--color-berry);
+  border-radius: var(--radius-subtle);
+}
+
+.monograph-body-quote {
+  position: relative;
+}
+
+.monograph-body-quote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  line-height: 1.35;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-style: italic;
+}
+
+.quote-mark {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--color-guava);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.monograph-footer-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  border-top: 1px dashed var(--color-rule);
+  padding-top: var(--space-12);
+  letter-spacing: 0.04em;
+}
+
+.hero-attention-field-wrap {
+  margin-top: var(--space-16);
+}
+
+/* Featured Lead Project Card (Aubergine + Citron Peak - Audit 3.A) */
+.project-card-featured {
+  background-color: var(--color-ink) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-ink) !important;
+  border-left: 4px solid var(--color-citron) !important;
+}
+
+.project-card-featured .project-meta-top {
+  border-bottom: 1px dashed rgba(255, 252, 246, 0.2);
+}
+
+.project-card-featured .project-header-title,
+.project-card-featured .project-title-link {
+  color: var(--color-white) !important;
+}
+
+.project-card-featured .project-summary {
+  color: rgba(255, 252, 246, 0.85) !important;
+}
+
+.project-card-featured .project-context-tag {
+  color: var(--color-citron) !important;
+}
+
+.project-card-featured .project-year {
+  color: rgba(255, 252, 246, 0.6) !important;
+}
+
+.project-card-featured .project-case-study {
+  background-color: #382B40 !important;
+  border-left: 3px solid var(--color-citron);
+}
+
+.project-card-featured .field-label {
+  color: var(--color-citron) !important;
+}
+
+.project-card-featured .field-value {
+  color: var(--color-white) !important;
+}
+
+.project-card-featured .method-tag {
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 252, 246, 0.25);
+}
+
+.project-card-featured .project-attributions {
+  border-top-color: rgba(255, 252, 246, 0.2);
+  color: rgba(255, 252, 246, 0.7);
+}
+
+.project-card-featured .attr-item strong {
+  color: var(--color-white);
+}
+
+.project-card-featured .artefact-link {
+  color: var(--color-citron) !important;
+}
+
+.project-card-featured .artefact-link:hover {
+  color: var(--color-white) !important;
+}
+
+.featured-project-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--color-citron);
+  color: var(--color-ink);
+  padding: 2px 8px;
+  font-weight: 700;
+  border-radius: var(--radius-subtle);
+  letter-spacing: 0.05em;
+}
+
+/* Secondary Surface Variants */
+.project-card-lavender {
+  background-color: var(--color-lavender);
+}
+
+.project-card-seaglass {
+  background-color: var(--color-seaglass);
+}
+
+/* Motion 5: Project Card Physical Depth & Lift */
+.project-card {
+  transition: transform var(--motion-fast) var(--ease-editorial),
+              border-color var(--motion-fast) ease,
+              box-shadow var(--motion-fast) ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-3.5px);
+  box-shadow: 0 10px 28px rgba(44, 33, 51, 0.07);
+  border-color: var(--color-ink);
+}
+
+.project-card-featured:hover,
+.project-card-featured:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(44, 33, 51, 0.28);
+  border-color: var(--color-citron) !important;
+}
+
+.project-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-title-link:hover {
+  text-decoration: underline;
+}
+
+/* Motion 4: Restrained Margin Progress Rail (Desktop) */
+.margin-progress-rail {
+  position: fixed;
+  right: clamp(16px, 2.5vw, 36px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+}
+
+@media (max-width: 1199px) {
+  .margin-progress-rail {
+    display: none;
+  }
+}
+
+.rail-indicator-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.rail-index-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin-bottom: var(--space-4);
+}
+
+.rail-vertical-track {
+  width: 2px;
+  height: 120px;
+  background: var(--color-rule);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.rail-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-berry);
+  transform-origin: top;
+  transition: transform 120ms ease-out;
+}
+
+.rail-nodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: var(--space-4);
+}
+
+.rail-node-dot {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.rail-dot-pill {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  opacity: 0.4;
+  transition: transform var(--motion-fast) ease, opacity var(--motion-fast) ease, background-color var(--motion-fast) ease;
+}
+
+.rail-node-dot:hover .rail-dot-pill {
+  opacity: 0.9;
+  transform: scale(1.3);
+}
+
+.rail-node-dot.is-active .rail-dot-pill {
+  background: var(--color-berry);
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.rail-node-dot:focus-visible {
   outline: 2px solid var(--color-berry);
   outline-offset: 2px;
 }

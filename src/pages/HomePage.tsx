@@ -14,6 +14,7 @@ import { WritingPresentationsSection } from '../components/WritingPresentationsS
 import { EthicalPracticeSection } from '../components/EthicalPracticeSection';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
+import { MarginProgressRail } from '../components/MarginProgressRail';
 
 export const HomePage: React.FC = () => {
   // Update document title for SEO
@@ -29,6 +30,7 @@ export const HomePage: React.FC = () => {
     <>
       <SkipLink />
       <SiteHeader profile={profile} projects={projects} />
+      <MarginProgressRail />
 
       <main id="main-content" tabIndex={-1}>
         <HeroSection profile={profile} />

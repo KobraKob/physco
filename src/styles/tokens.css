@@ -3,7 +3,7 @@
   /* Core Curious Margin Palette */
   --color-paper: #F8F3E8;            /* Main canvas: warm porcelain */
   --color-ink: #2C2133;              /* Primary text & deep aubergine surfaces */
-  --color-secondary: #5F5362;        /* Secondary copy & metadata */
+  --color-secondary: #594B5E;        /* Secondary copy & metadata (WCAG AA compliant on sea-glass) */
   --color-berry: #6B315D;            /* Primary link, active nav, editorial numbering */
   --color-moss: #32675E;             /* Secondary accent: research methods & category tags */
   --color-citron: #DDEB72;           /* Bright highlighter: underline blocks, chart accents */

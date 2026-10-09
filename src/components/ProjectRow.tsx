@@ -6,11 +6,15 @@ import { EvidenceTrail, type EvidenceTrailStage } from './EvidenceTrail';
 export interface ProjectRowProps {
   project: Project;
   showFullCaseStudy?: boolean;
+  isFeatured?: boolean;
+  surfaceVariant?: 'featured' | 'lavender' | 'seaglass';
 }
 
 export const ProjectRow: React.FC<ProjectRowProps> = ({
   project,
   showFullCaseStudy = true,
+  isFeatured = false,
+  surfaceVariant = 'lavender',
 }) => {
   // Validate artefact link
   const isValidArtefact =
@@ -30,19 +34,35 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
     project.limitations ? { key: 'limitations', label: 'Limitations' } : null,
   ].filter(Boolean) as EvidenceTrailStage[];
 
+  const cardVariantClass = isFeatured
+    ? 'project-card-featured'
+    : surfaceVariant === 'seaglass'
+    ? 'project-card-seaglass'
+    : 'project-card-lavender';
+
   return (
-    <article className="project-card" aria-labelledby={`project-${project.slug}-title`}>
+    <article
+      className={`project-card ${cardVariantClass}`}
+      aria-labelledby={`project-${project.slug}-title`}
+    >
       {/* Top Metadata */}
-      {(project.context || project.year) && (
-        <div className="project-meta-top">
-          {project.context && <span className="project-context-tag">[{project.context}]</span>}
-          {project.year && <span className="project-year">{project.year}</span>}
+      <div className="project-meta-top">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {isFeatured && (
+            <span className="featured-project-badge">
+              [FEATURED INVESTIGATION]
+            </span>
+          )}
+          {project.context && (
+            <span className="project-context-tag">[{project.context}]</span>
+          )}
         </div>
-      )}
+        {project.year && <span className="project-year">{project.year}</span>}
+      </div>
 
       {/* Title */}
       <h3 id={`project-${project.slug}-title`} className="project-header-title">
-        <Link to={`/project/${project.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+        <Link to={`/project/${project.slug}`} className="project-title-link">
           {project.title}
         </Link>
       </h3>
@@ -59,7 +79,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 1. Question */}
           {project.question && (
             <div className="case-study-field">
-              <span className="field-label">Core Research Question</span>
+              <span className="field-label">1. Core Research Question</span>
               <p className="field-value">{project.question}</p>
             </div>
           )}
@@ -67,7 +87,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 2. Context */}
           {project.context && (
             <div className="case-study-field">
-              <span className="field-label">Academic Context</span>
+              <span className="field-label">2. Academic Setting &amp; Context</span>
               <p className="field-value">{project.context}</p>
             </div>
           )}
@@ -75,7 +95,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 3. Method */}
           {project.methods && project.methods.length > 0 && (
             <div className="case-study-field">
-              <span className="field-label">Methodological Approach</span>
+              <span className="field-label">3. Methodological Approach</span>
               <div className="methods-tags-list">
                 {project.methods.map((method, idx) => (
                   <span key={idx} className="method-tag">
@@ -89,7 +109,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 4. Contribution */}
           {project.contribution && (
             <div className="case-study-field">
-              <span className="field-label">Researcher Contribution</span>
+              <span className="field-label">4. Researcher Contribution</span>
               <p className="field-value">{project.contribution}</p>
             </div>
           )}
@@ -97,7 +117,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 5. Findings / Learning */}
           {project.findingsOrLearning && (
             <div className="case-study-field">
-              <span className="field-label">Empirical Findings &amp; Observations</span>
+              <span className="field-label">5. Empirical Findings &amp; Observations</span>
               <p className="field-value">{project.findingsOrLearning}</p>
             </div>
           )}
@@ -105,7 +125,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
           {/* 6. Limitations */}
           {project.limitations && (
             <div className="case-study-field">
-              <span className="field-label">Methodological Limitations</span>
+              <span className="field-label">6. Methodological Limitations</span>
               <p className="field-value">{project.limitations}</p>
             </div>
           )}
@@ -132,7 +152,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
               <span className="field-label">Key Scholarly References</span>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
                 {project.references.map((ref, idx) => (
-                  <li key={idx} style={{ fontSize: '0.85rem', color: 'var(--color-secondary)' }}>
+                  <li key={idx} style={{ fontSize: '0.85rem' }}>
                     {ref.href.startsWith('https://') ? (
                       <a href={ref.href} target="_blank" rel="noopener noreferrer">
                         {ref.label}
@@ -148,7 +168,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({
         </div>
       )}
 
-      {/* Footer Actions: Dedicated Detail Link and Artefact Link with Stationary Text & Mobile-Safe Hover/Focus */}
+      {/* Footer Actions: Dedicated Detail Link and Artefact Link with Physical Lift and Translating Arrow */}
       <div className="project-footer-actions">
         <Link to={`/project/${project.slug}`} className="artefact-link project-dossier-link">
           <span>Read complete project dossier</span>
